@@ -104,6 +104,37 @@ export function CaseStudyDetail({ study, prev, next }: Props) {
         )}
       </motion.section>
 
+      {/* Before / After — Tarjeta Favorita */}
+      {study.slug === 'banorte-tarjeta-favorita' && (
+        <motion.section {...fadeUp} className="mb-16">
+          <h2 className="text-xs font-semibold text-accent tracking-widest uppercase mb-4">
+            Antes y después
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {[
+              { src: '/projects/tarjeta-antes.png', label: 'Antes' },
+              { src: '/projects/tarjeta-despues.png', label: 'Después' },
+            ].map(({ src, label }) => (
+              <div key={label} className="flex flex-col gap-2">
+                <div
+                  className="overflow-hidden border border-border-default bg-surface-secondary"
+                  style={{ borderRadius: 12 }}
+                >
+                  <img
+                    src={src}
+                    alt={`${study.title} — ${label}`}
+                    className="w-full h-auto block"
+                  />
+                </div>
+                <p className="text-xs font-medium text-on-surface-muted text-center tracking-wide uppercase">
+                  {label}
+                </p>
+              </div>
+            ))}
+          </div>
+        </motion.section>
+      )}
+
       {/* Content */}
       <div className="space-y-16">
 
