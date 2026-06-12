@@ -1,8 +1,9 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowLeft, ArrowRight, Check, TrendingDown, TrendingUp, Minus, ImageIcon } from 'lucide-react'
+import { ArrowLeft, ArrowRight, Check, TrendingDown, TrendingUp, Minus } from 'lucide-react'
 import { Badge } from '@/components/ui/Badge'
 import type { CaseStudy } from '@/types'
 
@@ -20,6 +21,65 @@ const fadeUp = {
   whileInView: { opacity: 1, y: 0 },
   viewport: { once: true },
   transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
+}
+
+function ProjectImages({ study }: { study: CaseStudy }) {
+  if (study.slug === 'coe-diseno-estrategico') {
+    return (
+      <motion.section {...fadeUp}>
+        <h2 className="text-xs font-semibold text-accent tracking-widest uppercase mb-4">
+          Visualización del proyecto
+        </h2>
+        <figure className="flex flex-col gap-3">
+          <div className="overflow-hidden border border-border-default bg-surface-secondary" style={{ borderRadius: 12 }}>
+            <Image
+              src="/projects/coe-areas.png"
+              alt="Ecosistema colaborativo del CoE — áreas aliadas y contactos clave"
+              width={1200}
+              height={800}
+              className="w-full h-auto block"
+            />
+          </div>
+          <figcaption className="text-xs text-on-surface-muted text-center">
+            Ecosistema colaborativo del CoE — áreas aliadas y contactos clave
+          </figcaption>
+        </figure>
+      </motion.section>
+    )
+  }
+
+  if (study.slug === 'banorte-tarjeta-favorita') {
+    return (
+      <motion.section {...fadeUp}>
+        <h2 className="text-xs font-semibold text-accent tracking-widest uppercase mb-4">
+          Antes y después
+        </h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {[
+            { src: '/projects/tarjeta-antes.png', label: 'Antes' },
+            { src: '/projects/tarjeta-despues.png', label: 'Después' },
+          ].map(({ src, label }) => (
+            <figure key={label} className="flex flex-col gap-2">
+              <div className="overflow-hidden border border-border-default bg-surface-secondary" style={{ borderRadius: 12 }}>
+                <Image
+                  src={src}
+                  alt={`Tarjeta Favorita — ${label}`}
+                  width={800}
+                  height={600}
+                  className="w-full h-auto block"
+                />
+              </div>
+              <figcaption className="text-xs font-medium text-on-surface-muted text-center tracking-wide uppercase">
+                {label}
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      </motion.section>
+    )
+  }
+
+  return null
 }
 
 export function CaseStudyDetail({ study, prev, next }: Props) {
@@ -76,65 +136,6 @@ export function CaseStudyDetail({ study, prev, next }: Props) {
         </div>
       </motion.header>
 
-      {/* Image gallery */}
-      <motion.section {...fadeUp} className="mb-16">
-        <h2 className="text-xs font-semibold text-accent tracking-widest uppercase mb-4">
-          Imágenes del proyecto
-        </h2>
-        {study.images && study.images.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            {study.images.map((src, i) => (
-              <div
-                key={i}
-                className="rounded-xl overflow-hidden bg-surface-secondary border border-border-default aspect-video"
-              >
-                <img
-                  src={src}
-                  alt={`${study.title} — imagen ${i + 1}`}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            ))}
-          </div>
-        ) : (
-          <div className="flex flex-col items-center justify-center gap-3 rounded-2xl bg-surface-secondary border border-border-default border-dashed py-16 px-6">
-            <ImageIcon className="w-8 h-8 text-on-surface-muted/40" />
-            <p className="text-sm text-on-surface-muted">Imágenes del proyecto próximamente</p>
-          </div>
-        )}
-      </motion.section>
-
-      {/* Before / After — Tarjeta Favorita */}
-      {study.slug === 'banorte-tarjeta-favorita' && (
-        <motion.section {...fadeUp} className="mb-16">
-          <h2 className="text-xs font-semibold text-accent tracking-widest uppercase mb-4">
-            Antes y después
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {[
-              { src: '/projects/tarjeta-antes.png', label: 'Antes' },
-              { src: '/projects/tarjeta-despues.png', label: 'Después' },
-            ].map(({ src, label }) => (
-              <div key={label} className="flex flex-col gap-2">
-                <div
-                  className="overflow-hidden border border-border-default bg-surface-secondary"
-                  style={{ borderRadius: 12 }}
-                >
-                  <img
-                    src={src}
-                    alt={`${study.title} — ${label}`}
-                    className="w-full h-auto block"
-                  />
-                </div>
-                <p className="text-xs font-medium text-on-surface-muted text-center tracking-wide uppercase">
-                  {label}
-                </p>
-              </div>
-            ))}
-          </div>
-        </motion.section>
-      )}
-
       {/* Content */}
       <div className="space-y-16">
 
@@ -164,6 +165,9 @@ export function CaseStudyDetail({ study, prev, next }: Props) {
             <p className="text-on-surface leading-relaxed">{study.solution}</p>
           </motion.section>
         )}
+
+        {/* Project-specific images — between solution and results */}
+        <ProjectImages study={study} />
 
         {study.results && study.results.length > 0 && (
           <motion.section {...fadeUp}>
