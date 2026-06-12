@@ -18,7 +18,7 @@ export function ProfilePhoto() {
       src="/pablo.jpg"
       alt="Pablo Nava"
       onError={() => setError(true)}
-      className="w-28 h-28 sm:w-32 sm:h-32 rounded-2xl object-cover border border-border-default shrink-0"
+      className="w-28 h-28 sm:w-32 sm:h-32 rounded-2xl object-cover object-top border border-border-default shrink-0"
     />
   )
 }
