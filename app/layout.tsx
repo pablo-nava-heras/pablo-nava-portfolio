@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
+import { ThemeProvider } from '@/components/ThemeProvider'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -9,28 +10,37 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: 'Pablo Nava — Product Designer',
-  description:
-    'Product designer and frontend developer specializing in complex interfaces, design systems, and user research.',
-  keywords: ['product design', 'UX', 'design systems', 'frontend', 'portfolio'],
+  title: 'Pablo Nava — Strategic Design Lead',
+  description: 'Strategic Design Lead con 7+ años en banca, producto e IA generativa.',
+  keywords: ['strategic design', 'DesignOps', 'UX', 'product design', 'IA', 'portfolio'],
   authors: [{ name: 'Pablo Nava' }],
   openGraph: {
-    title: 'Pablo Nava — Product Designer',
-    description: 'Product designer who ships in code.',
+    title: 'Pablo Nava — Strategic Design Lead',
+    description: 'Strategic Design Lead con 7+ años en banca, producto e IA generativa.',
     type: 'website',
-    locale: 'en_US',
+    locale: 'es_MX',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Pablo Nava — Product Designer',
-    description: 'Product designer who ships in code.',
+    title: 'Pablo Nava — Strategic Design Lead',
+    description: 'Strategic Design Lead con 7+ años en banca, producto e IA generativa.',
   },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="es" className={inter.variable} suppressHydrationWarning>
-      <body suppressHydrationWarning>{children}</body>
+      <head>
+        {/* Anti-flash: apply saved theme before React hydration */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{var t=localStorage.getItem('theme');if(t==='light')document.documentElement.classList.add('light');}catch(e){}`,
+          }}
+        />
+      </head>
+      <body suppressHydrationWarning>
+        <ThemeProvider>{children}</ThemeProvider>
+      </body>
     </html>
   )
 }

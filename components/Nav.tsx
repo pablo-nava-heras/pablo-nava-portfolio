@@ -3,12 +3,15 @@
 import { motion, useMotionValueEvent, useScroll } from 'framer-motion'
 import Link from 'next/link'
 import { useState } from 'react'
+import { Sun, Moon } from 'lucide-react'
 import { navItems } from '@/lib/data'
 import { Button } from '@/components/ui/Button'
+import { useTheme } from '@/components/ThemeProvider'
 
 export function Nav() {
   const [scrolled, setScrolled] = useState(false)
   const { scrollY } = useScroll()
+  const { theme, toggle, mounted } = useTheme()
 
   useMotionValueEvent(scrollY, 'change', (y) => {
     setScrolled(y > 40)
@@ -46,13 +49,28 @@ export function Nav() {
           ))}
         </ul>
 
-        <Button
-          href="/contacto"
-          variant="secondary"
-          className="hidden md:inline-flex text-xs"
-        >
-          Hablemos
-        </Button>
+        <div className="flex items-center gap-2">
+          {/* Theme toggle */}
+          {mounted && (
+            <button
+              onClick={toggle}
+              aria-label={theme === 'dark' ? 'Activar modo claro' : 'Activar modo oscuro'}
+              className="w-8 h-8 rounded-full border border-border-default flex items-center justify-center text-on-surface-muted hover:text-on-surface hover:border-accent/40 transition-all"
+            >
+              {theme === 'dark'
+                ? <Sun className="w-3.5 h-3.5" />
+                : <Moon className="w-3.5 h-3.5" />}
+            </button>
+          )}
+
+          <Button
+            href="/contacto"
+            variant="secondary"
+            className="hidden md:inline-flex text-xs"
+          >
+            Hablemos
+          </Button>
+        </div>
       </nav>
     </motion.header>
   )
