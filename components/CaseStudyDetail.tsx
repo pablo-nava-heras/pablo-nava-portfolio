@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { ArrowLeft, ArrowRight, Check, TrendingDown, TrendingUp, Minus } from 'lucide-react'
+import { ArrowLeft, ArrowRight, Check, TrendingDown, TrendingUp, Minus, ImageIcon } from 'lucide-react'
 import { Badge } from '@/components/ui/Badge'
 import type { CaseStudy } from '@/types'
 
@@ -75,6 +75,34 @@ export function CaseStudyDetail({ study, prev, next }: Props) {
           </div>
         </div>
       </motion.header>
+
+      {/* Image gallery */}
+      <motion.section {...fadeUp} className="mb-16">
+        <h2 className="text-xs font-semibold text-accent tracking-widest uppercase mb-4">
+          Imágenes del proyecto
+        </h2>
+        {study.images && study.images.length > 0 ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {study.images.map((src, i) => (
+              <div
+                key={i}
+                className="rounded-xl overflow-hidden bg-surface-secondary border border-border-default aspect-video"
+              >
+                <img
+                  src={src}
+                  alt={`${study.title} — imagen ${i + 1}`}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="flex flex-col items-center justify-center gap-3 rounded-2xl bg-surface-secondary border border-border-default border-dashed py-16 px-6">
+            <ImageIcon className="w-8 h-8 text-on-surface-muted/40" />
+            <p className="text-sm text-on-surface-muted">Imágenes del proyecto próximamente</p>
+          </div>
+        )}
+      </motion.section>
 
       {/* Content */}
       <div className="space-y-16">
@@ -162,7 +190,7 @@ export function CaseStudyDetail({ study, prev, next }: Props) {
       >
         {prev ? (
           <Link
-            href={`/trabajo/${prev.slug}`}
+            href={`/proyectos/${prev.slug}`}
             className="group flex items-center gap-2 text-sm text-on-surface-muted hover:text-on-surface transition-colors min-w-0"
           >
             <ArrowLeft className="w-4 h-4 shrink-0 group-hover:-translate-x-1 transition-transform" />
@@ -180,7 +208,7 @@ export function CaseStudyDetail({ study, prev, next }: Props) {
 
         {next && (
           <Link
-            href={`/trabajo/${next.slug}`}
+            href={`/proyectos/${next.slug}`}
             className="group flex items-center gap-2 text-sm text-on-surface-muted hover:text-on-surface transition-colors ml-auto min-w-0"
           >
             <span className="line-clamp-1">{next.title}</span>

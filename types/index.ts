@@ -23,6 +23,7 @@ export interface CaseStudy {
   challenge?: string
   solution?: string
   results?: string[]
+  images?: string[]
 }
 
 export interface NavItem {
