@@ -71,17 +71,17 @@ export function Hero() {
         </motion.p>
 
         <motion.div variants={item} className="flex flex-col sm:flex-row gap-3 justify-center">
-          <Button href="#work" variant="primary">
+          <Button href="/proyectos" variant="primary">
             {hero.ctaPrimary}
           </Button>
-          <Button href="#contact" variant="secondary">
+          <Button href="/contacto" variant="secondary">
             {hero.ctaSecondary}
           </Button>
         </motion.div>
       </motion.div>
 
       <motion.a
-        href="#work"
+        href="#trabajo"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.2 }}

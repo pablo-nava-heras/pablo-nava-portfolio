@@ -32,15 +32,25 @@ export function Metodologias() {
         transition={{ duration: 0.5 }}
         className="mb-14"
       >
-        <p className="text-accent text-sm font-medium tracking-wider uppercase mb-3">
-          Metodologías
-        </p>
-        <h1 className="text-4xl sm:text-5xl font-bold text-on-surface leading-tight mb-2">
-          Cómo trabajo
-        </h1>
-        <p className="text-on-surface-secondary">
-          Los frameworks que estructuran mi proceso de diseño estratégico.
-        </p>
+        <div className="max-w-2xl">
+          <p className="text-accent text-sm font-medium tracking-wider uppercase mb-3">
+            Metodologías de diseño
+          </p>
+          <h1 className="text-4xl sm:text-5xl font-bold text-on-surface leading-tight mb-4">
+            Cómo estructuro el trabajo
+          </h1>
+          <p className="text-on-surface-secondary text-lg leading-relaxed mb-6">
+            Seis frameworks que han guiado mi proceso en 7+ años de trabajo en banca, producto e IA.
+            Cada uno tiene su contexto, sus artefactos y su razón de ser.
+          </p>
+          <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-on-surface-muted">
+            <span>6 metodologías</span>
+            <span className="text-border-default">·</span>
+            <span>40+ artefactos</span>
+            <span className="text-border-default">·</span>
+            <span>Con detalle de uso real</span>
+          </div>
+        </div>
       </motion.header>
 
       {/* Method tabs */}

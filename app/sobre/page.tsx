@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Nav } from '@/components/Nav'
 import { Footer } from '@/components/Footer'
 import { Badge } from '@/components/ui/Badge'
+import { ProfilePhoto } from '@/components/ProfilePhoto'
 import { about, skills } from '@/lib/data'
 
 export const metadata: Metadata = {
@@ -18,13 +19,18 @@ export default function SobrePage() {
 
         {/* Header */}
         <header className="mb-20">
-          <p className="text-accent text-sm font-medium tracking-wider uppercase mb-4">
-            {about.sectionLabel}
-          </p>
-          <h1 className="text-4xl sm:text-5xl font-bold text-on-surface mb-6 leading-tight">
-            {about.heading}
-          </h1>
-          <p className="text-on-surface leading-relaxed max-w-2xl">{about.bio[0]}</p>
+          <div className="flex flex-col sm:flex-row sm:items-start gap-6 sm:gap-8 mb-6">
+            <ProfilePhoto />
+            <div className="flex-1 min-w-0">
+              <p className="text-accent text-sm font-medium tracking-wider uppercase mb-3">
+                {about.sectionLabel}
+              </p>
+              <h1 className="text-4xl sm:text-5xl font-bold text-on-surface mb-4 leading-tight">
+                {about.heading}
+              </h1>
+              <p className="text-on-surface leading-relaxed">{about.bio[0]}</p>
+            </div>
+          </div>
         </header>
 
         {/* Principles */}

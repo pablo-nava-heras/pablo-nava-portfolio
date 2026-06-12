@@ -11,12 +11,7 @@ interface CaseStudyCardProps {
   index: number
 }
 
-const trendIcons = {
-  up: TrendingUp,
-  down: TrendingDown,
-  neutral: Minus,
-}
-
+const trendIcons = { up: TrendingUp, down: TrendingDown, neutral: Minus }
 const trendColors = {
   up: 'text-emerald-400',
   down: 'text-accent',
@@ -29,36 +24,54 @@ export function CaseStudyCard({ study, index }: CaseStudyCardProps) {
       initial={{ opacity: 0, y: 32 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-80px' }}
-      transition={{ duration: 0.6, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.6, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
       whileHover={{ y: -4 }}
-      className="group relative bg-surface-secondary border border-border-default rounded-2xl overflow-hidden transition-shadow duration-300 hover:shadow-card-hover"
+      className="group relative bg-surface-secondary border border-border-default rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-card-hover hover:border-accent/20"
     >
-      {/* Stretched link — makes the whole card clickable */}
+      {/* Stretched link */}
       <Link
         href={`/proyectos/${study.slug}`}
         className="absolute inset-0 z-10"
         aria-label={`Ver caso de estudio: ${study.title}`}
       />
+
+      {/* Top accent line */}
+      <div
+        className="h-[3px] w-full"
+        style={{ backgroundColor: study.accentColor }}
+      />
+
       {/* Cover */}
       <div
-        className="relative h-[120px] flex items-end p-6 overflow-hidden"
+        className="relative h-[132px] flex flex-col justify-between px-6 pt-4 pb-5 overflow-hidden"
         style={{ backgroundColor: study.coverColor }}
       >
+        {/* Hover glow */}
         <div
           className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
           style={{
-            background: `radial-gradient(ellipse at 60% 40%, ${study.accentColor}22 0%, transparent 70%)`,
+            background: `radial-gradient(ellipse at 70% 30%, ${study.accentColor}1a 0%, transparent 65%)`,
           }}
         />
-        <div className="relative flex items-end justify-between w-full">
+
+        {/* Company + year */}
+        <div className="relative flex items-center justify-between">
+          <span className="text-xs font-medium text-on-surface-muted/70 tracking-wide">
+            {study.company}
+          </span>
+          <span className="text-xs text-on-surface-muted/50">{study.year}</span>
+        </div>
+
+        {/* Number + arrow */}
+        <div className="relative flex items-end justify-between">
           <span
-            className="text-6xl font-bold tracking-tighter leading-none"
-            style={{ color: `${study.accentColor}26` }}
+            className="text-7xl font-bold tracking-tighter leading-none select-none"
+            style={{ color: `${study.accentColor}28` }}
           >
             {study.id}
           </span>
           <motion.div
-            className="relative z-20 w-9 h-9 rounded-full flex items-center justify-center border"
+            className="relative z-20 w-9 h-9 rounded-full flex items-center justify-center border transition-colors duration-200"
             style={{ borderColor: `${study.accentColor}40`, color: study.accentColor }}
             whileHover={{ scale: 1.1 }}
           >
@@ -69,26 +82,22 @@ export function CaseStudyCard({ study, index }: CaseStudyCardProps) {
 
       {/* Content */}
       <div className="p-6">
-        <div className="flex flex-wrap gap-1.5 mb-4">
+        <h3 className="text-base font-semibold text-on-surface mb-2 leading-snug">
+          {study.title}
+        </h3>
+
+        <p className="text-sm text-on-surface-secondary leading-relaxed mb-4 line-clamp-2">
+          {study.description}
+        </p>
+
+        <div className="flex flex-wrap gap-1.5 mb-5">
           {study.tags.slice(0, 3).map((tag) => (
             <Badge key={tag}>{tag}</Badge>
           ))}
         </div>
 
-        <p className="text-xs text-on-surface-muted mb-1">
-          {study.role} · {study.duration} · {study.year}
-        </p>
-
-        <h3 className="text-lg font-semibold text-on-surface mb-2 leading-snug">
-          {study.title}
-        </h3>
-
-        <p className="text-sm text-on-surface-secondary leading-relaxed mb-6 line-clamp-2">
-          {study.description}
-        </p>
-
         {/* Metrics */}
-        <div className="grid grid-cols-3 gap-3 pt-5 border-t border-border-subtle">
+        <div className="grid grid-cols-3 gap-3 pt-4 border-t border-border-subtle">
           {study.metrics.map((metric) => {
             const Icon = trendIcons[metric.trend]
             return (
@@ -103,12 +112,6 @@ export function CaseStudyCard({ study, index }: CaseStudyCardProps) {
           })}
         </div>
       </div>
-
-      {/* Bottom accent line */}
-      <div
-        className="absolute bottom-0 left-0 right-0 h-[2px] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300"
-        style={{ backgroundColor: study.accentColor }}
-      />
     </motion.article>
   )
 }
