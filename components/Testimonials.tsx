@@ -7,24 +7,16 @@ import { testimonials } from '@/lib/data'
 
 export function Testimonials() {
   const [currentIndex, setCurrentIndex] = useState(0)
-  const [timerKey, setTimerKey] = useState(0)
 
   useEffect(() => {
-    const timer = setInterval(() => {
+    const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % testimonials.length)
-    }, 5000)
-    return () => clearInterval(timer)
-  }, [timerKey])
+    }, 4000)
+    return () => clearInterval(interval)
+  }, [])
 
-  const goNext = () => {
-    setCurrentIndex((prev) => (prev + 1) % testimonials.length)
-    setTimerKey((k) => k + 1)
-  }
-
-  const goPrev = () => {
-    setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length)
-    setTimerKey((k) => k + 1)
-  }
+  const goNext = () => setCurrentIndex((prev) => (prev + 1) % testimonials.length)
+  const goPrev = () => setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length)
 
   const t = testimonials[currentIndex]
 
@@ -102,7 +94,7 @@ export function Testimonials() {
               {testimonials.map((_, i) => (
                 <button
                   key={i}
-                  onClick={() => { setCurrentIndex(i); setTimerKey((k) => k + 1) }}
+                  onClick={() => setCurrentIndex(i)}
                   aria-label={`Ir al testimonio ${i + 1}`}
                   className={`rounded-full transition-all duration-300 ${
                     i === currentIndex
