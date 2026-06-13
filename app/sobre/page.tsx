@@ -52,6 +52,59 @@ export default function SobrePage() {
           </div>
         </section>
 
+        {/* Experience */}
+        <section className="mb-20">
+          <h2 className="text-xs font-semibold text-accent tracking-widest uppercase mb-8">
+            Experiencia
+          </h2>
+          <div className="space-y-0">
+            {[
+              {
+                role: 'Strategic Design Lead',
+                company: 'Coppel',
+                period: 'Mar 2024 – Mar 2026',
+                description: 'Fundé el primer Centro de Excelencia de Diseño Estratégico integrando Producto, UX y DesignOps bajo gobernanza unificada con OKRs, KPIs y playbooks.',
+              },
+              {
+                role: 'Product Specialist',
+                company: 'Grupo Financiero Banorte',
+                period: 'Dic 2021 – Mar 2024',
+                description: 'Fundé la primera célula estratégica de producto Nómina. Definí NSM, OKRs y KPIs alineados con alta dirección para segmentos PyME y Empresarial.',
+              },
+              {
+                role: 'CX/UX Design Lead',
+                company: 'Grupo Financiero Banorte',
+                period: 'Feb 2018 – Dic 2021',
+                description: 'Lideré iniciativas de CX para plataformas digitales PyME y Empresarial. Incrementé NPS de 68 a 74 mediante optimización de journeys.',
+              },
+              {
+                role: 'CX Analyst',
+                company: 'Grupo Financiero Banorte',
+                period: 'Ago 2016 – Ene 2018',
+                description: 'Análisis de NPS, mapeo de journeys y diagnóstico de fricciones en canales digitales y físicos. Base de datos que fundamentó la estrategia CX de banca empresarial.',
+              },
+            ].map((item, i, arr) => (
+              <div key={i} className="flex gap-5">
+                {/* Dot + connecting line */}
+                <div className="flex flex-col items-center">
+                  <div className="w-3 h-3 rounded-full bg-accent mt-1.5 shrink-0" />
+                  {i < arr.length - 1 && (
+                    <div className="w-px flex-1 bg-border-default mt-2" style={{ minHeight: 40 }} />
+                  )}
+                </div>
+                {/* Content */}
+                <div className="pb-10">
+                  <p className="text-on-surface font-semibold leading-snug">{item.role}</p>
+                  <p className="text-xs text-on-surface-muted mt-0.5 mb-2">
+                    {item.company} · {item.period}
+                  </p>
+                  <p className="text-sm text-on-surface-secondary leading-relaxed">{item.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
         {/* Skills */}
         <section className="mb-20">
           <h2 className="text-xs font-semibold text-accent tracking-widest uppercase mb-8">
