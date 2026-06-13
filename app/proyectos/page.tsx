@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function ProyectosPage() {
   return (
-    <div className="bg-surface min-h-screen">
+    <div className="min-h-screen" style={{ backgroundColor: 'var(--color-surface)' }}>
       <Nav />
       <AllProjects />
       <Footer />

@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 
 export default function ContactoPage() {
   return (
-    <div className="bg-surface min-h-screen">
+    <div className="min-h-screen" style={{ backgroundColor: 'var(--color-surface)' }}>
       <Nav />
       <main className="max-w-3xl mx-auto px-6 pt-32 pb-24">
 

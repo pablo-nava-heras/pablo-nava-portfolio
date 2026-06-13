@@ -31,7 +31,7 @@ export default async function ProjectPage({ params }: Props) {
   const next = idx < caseStudies.length - 1 ? caseStudies[idx + 1] : null
 
   return (
-    <div className="bg-surface min-h-screen">
+    <div className="min-h-screen" style={{ backgroundColor: 'var(--color-surface)' }}>
       <Nav />
       <CaseStudyDetail study={study} prev={prev} next={next} />
       <Footer />
