@@ -9,7 +9,7 @@ import {
   TrendingUp,
 } from 'lucide-react'
 import { metodologias, artifactLibrary } from '@/lib/metodologias'
-import type { Methodology, Stage } from '@/lib/metodologias'
+import type { Methodology, Stage, StageSubcategory } from '@/lib/metodologias'
 
 /* ── Types ──────────────────────────────────────────────────────── */
 type LucideIcon = React.ComponentType<{ className?: string; style?: React.CSSProperties }>
@@ -147,12 +147,15 @@ function MapView({ method, onBack, onArtifact }: {
   onBack: () => void
   onArtifact: (n: string) => void
 }) {
+  const meta = METHOD_META[method.id]
+
   return (
     <motion.div
       key="map"
       initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -16 }} transition={{ duration: 0.3 }}
     >
+      {/* Back button */}
       <button
         onClick={onBack}
         className="inline-flex items-center gap-2 text-sm text-on-surface-muted hover:text-on-surface transition-colors mb-8"
@@ -161,38 +164,72 @@ function MapView({ method, onBack, onArtifact }: {
         Regresar
       </button>
 
-      <div className="mb-8">
-        <h2 className="text-xl font-bold text-on-surface mb-1">{method.name} — Mapa completo</h2>
-        <p className="text-sm text-on-surface-secondary">{method.description}</p>
+      {/* Method card header */}
+      <div className="flex items-start gap-4 p-5 bg-surface-secondary border border-border-default rounded-xl mb-8">
+        {meta && (
+          <div className="flex items-center justify-center shrink-0"
+            style={{ width: 40, height: 40, borderRadius: 10, backgroundColor: wa(meta.color, 0.12) }}>
+            <meta.Icon className="w-5 h-5" style={{ color: meta.color }} />
+          </div>
+        )}
+        <div>
+          <h2 className="text-xl font-bold text-on-surface mb-1">{method.name} — Mapa completo</h2>
+          <p className="text-sm text-on-surface-secondary leading-relaxed">{method.description}</p>
+        </div>
       </div>
 
-      <div className="overflow-x-auto pb-2">
-        <div className="grid gap-4 min-w-max" style={{ gridTemplateColumns: `repeat(${method.stages.length}, 200px)` }}>
+      {/* Stages grid */}
+      <div className="overflow-x-auto pb-4">
+        <div
+          className="grid gap-3 min-w-max"
+          style={{ gridTemplateColumns: `repeat(${method.stages.length}, 220px)` }}
+        >
           {method.stages.map((stage, i) => {
             const sc = STAGE_COLORS[i] ?? STAGE_COLORS[0]
             return (
-              <div key={stage.name} className="flex flex-col gap-1 border border-border-default rounded-xl overflow-hidden">
+              <div
+                key={stage.name}
+                className="flex flex-col border border-border-default rounded-xl overflow-hidden bg-surface-secondary"
+              >
                 {/* Column header */}
-                <div className="px-3 py-2.5 border-b border-border-default flex items-center gap-2"
-                  style={{ backgroundColor: wa(sc, 0.06) }}>
-                  <span className="w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold text-white shrink-0"
-                    style={{ backgroundColor: sc }}>
+                <div
+                  className="px-3 py-2.5 border-b flex items-center gap-2"
+                  style={{
+                    backgroundColor: wa(sc, 0.10),
+                    borderColor: wa(sc, 0.30),
+                  }}
+                >
+                  <span
+                    className="w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold text-white shrink-0"
+                    style={{ backgroundColor: sc }}
+                  >
                     {i + 1}
                   </span>
                   <span className="text-xs font-semibold" style={{ color: sc }}>{stage.name}</span>
                 </div>
-                {/* Artifacts */}
-                <div className="p-2 flex flex-col gap-1">
-                  {stage.artifacts.map((name) => (
-                    <button
-                      key={name}
-                      onClick={() => onArtifact(name)}
-                      className="flex items-center gap-2 text-xs text-on-surface-secondary hover:text-on-surface px-2 py-1 rounded text-left transition-colors"
-                    >
-                      <span className="w-1 h-1 rounded-full shrink-0" style={{ backgroundColor: sc }} />
-                      {name}
-                    </button>
-                  ))}
+
+                {/* Artifacts — subcategories if available, else flat list */}
+                <div className="p-3 flex flex-col gap-3 flex-1">
+                  {stage.subcategories && stage.subcategories.length > 0 ? (
+                    stage.subcategories.map((sub: StageSubcategory) => (
+                      <div key={sub.name}>
+                        <p className="text-[10px] font-bold mb-1.5 px-1" style={{ color: sc }}>
+                          {sub.name}
+                        </p>
+                        <div className="flex flex-col gap-0.5">
+                          {sub.items.map((name) => (
+                            <MapArtifactRow key={name} name={name} color={sc} onClick={() => onArtifact(name)} />
+                          ))}
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="flex flex-col gap-0.5">
+                      {stage.artifacts.map((name) => (
+                        <MapArtifactRow key={name} name={name} color={sc} onClick={() => onArtifact(name)} />
+                      ))}
+                    </div>
+                  )}
                 </div>
               </div>
             )
@@ -200,6 +237,26 @@ function MapView({ method, onBack, onArtifact }: {
         </div>
       </div>
     </motion.div>
+  )
+}
+
+/* ── MapArtifactRow ──────────────────────────────────────────────── */
+function MapArtifactRow({ name, color, onClick }: { name: string; color: string; onClick: () => void }) {
+  const [hov, setHov] = useState(false)
+  return (
+    <button
+      onClick={onClick}
+      onMouseEnter={() => setHov(true)}
+      onMouseLeave={() => setHov(false)}
+      className="flex items-center gap-2 w-full text-left px-2 py-1 rounded-md text-xs transition-all duration-150 cursor-pointer"
+      style={{
+        backgroundColor: hov ? wa(color, 0.08) : 'transparent',
+        color: hov ? color : 'var(--color-on-surface-secondary)',
+      }}
+    >
+      <span className="w-1 h-1 rounded-full shrink-0" style={{ backgroundColor: color }} />
+      {name}
+    </button>
   )
 }
 
@@ -507,7 +564,7 @@ export function Metodologias() {
                               {/* Artifacts list */}
                               <div className="p-2 flex flex-col gap-0.5">
                                 {s.artifacts.slice(0, 7).map((name) => (
-                                  <GridArtifactRow key={name} name={name} color={sc} onClick={() => setOpenArtifact(name)} />
+                                  <MapArtifactRow key={name} name={name} color={sc} onClick={() => setOpenArtifact(name)} />
                                 ))}
                                 {s.artifacts.length > 7 && (
                                   <p className="text-[10px] text-on-surface-muted px-2 py-1">
@@ -581,22 +638,3 @@ export function Metodologias() {
   )
 }
 
-/* ── Inline artifact row for the stage grid ─────────────────────── */
-function GridArtifactRow({ name, color, onClick }: { name: string; color: string; onClick: () => void }) {
-  const [hov, setHov] = useState(false)
-  return (
-    <button
-      onClick={onClick}
-      onMouseEnter={() => setHov(true)}
-      onMouseLeave={() => setHov(false)}
-      className="flex items-center gap-2 w-full text-left px-2 py-1 rounded-md text-xs transition-all duration-150 cursor-pointer"
-      style={{
-        backgroundColor: hov ? wa(color, 0.08) : 'transparent',
-        color: hov ? color : 'var(--color-on-surface-secondary)',
-      }}
-    >
-      <span className="w-1 h-1 rounded-full shrink-0" style={{ backgroundColor: color }} />
-      {name}
-    </button>
-  )
-}

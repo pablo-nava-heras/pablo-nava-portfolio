@@ -5,6 +5,11 @@ export interface ArtifactDetail {
   output: string
 }
 
+export interface StageSubcategory {
+  name: string
+  items: string[]
+}
+
 export interface Stage {
   name: string
   question?: string
@@ -12,6 +17,7 @@ export interface Stage {
   roles?: string[]
   deliverables?: string[]
   artifacts: string[]
+  subcategories?: StageSubcategory[]
 }
 
 export interface Methodology {
@@ -359,6 +365,10 @@ export const metodologias: Methodology[] = [
         roles: ['UX Researcher', 'Diseñador UX', 'Product Manager'],
         deliverables: ['Documentación de investigación', 'Mapas de empatía', 'Insights de usuario'],
         artifacts: ['Entrevistas a usuarios', 'Mapa de empatía', 'Observación contextual'],
+        subcategories: [
+          { name: 'Investigación primaria', items: ['Entrevistas a usuarios', 'Observación contextual'] },
+          { name: 'Síntesis de datos', items: ['Mapa de empatía'] },
+        ],
       },
       {
         name: 'Definir',
@@ -367,6 +377,10 @@ export const metodologias: Methodology[] = [
         roles: ['Diseñador UX', 'Product Manager', 'Stakeholders'],
         deliverables: ['Personas', 'Problem Statement', 'Point of View (POV)'],
         artifacts: ['Personas', 'Declaración del problema', 'How Might We (HMW)'],
+        subcategories: [
+          { name: 'Arquetipos de usuario', items: ['Personas'] },
+          { name: 'Enmarcado del problema', items: ['Declaración del problema', 'How Might We (HMW)'] },
+        ],
       },
       {
         name: 'Idear',
@@ -375,6 +389,10 @@ export const metodologias: Methodology[] = [
         roles: ['Diseñador UX/UI', 'Product Designer', 'Equipo multidisciplinario'],
         deliverables: ['Sketches', 'Conceptos priorizados'],
         artifacts: ['Sesiones de Brainstorming', 'Sketches/Bocetos', 'Storyboards'],
+        subcategories: [
+          { name: 'Divergencia', items: ['Sesiones de Brainstorming', 'Sketches/Bocetos'] },
+          { name: 'Narrativa', items: ['Storyboards'] },
+        ],
       },
       {
         name: 'Prototipar',
@@ -383,6 +401,10 @@ export const metodologias: Methodology[] = [
         roles: ['Diseñador UI', 'Diseñador UX', 'Desarrollador Frontend'],
         deliverables: ['Prototipos interactivos', 'Especificaciones de diseño', 'MVP'],
         artifacts: ['Prototipo de baja fidelidad', 'Prototipo de alta fidelidad', 'MVP (Producto Mínimo Viable)'],
+        subcategories: [
+          { name: 'Exploración rápida', items: ['Prototipo de baja fidelidad'] },
+          { name: 'Validación avanzada', items: ['Prototipo de alta fidelidad', 'MVP (Producto Mínimo Viable)'] },
+        ],
       },
       {
         name: 'Testear',
@@ -391,6 +413,10 @@ export const metodologias: Methodology[] = [
         roles: ['UX Researcher', 'Diseñador UX', 'Product Manager'],
         deliverables: ['Reporte de testing', 'Insights y aprendizajes', 'Backlog de mejoras'],
         artifacts: ['Test de usabilidad', 'A/B Testing', 'Sesiones de feedback'],
+        subcategories: [
+          { name: 'Validación cualitativa', items: ['Test de usabilidad', 'Sesiones de feedback'] },
+          { name: 'Validación cuantitativa', items: ['A/B Testing'] },
+        ],
       },
     ],
   },
