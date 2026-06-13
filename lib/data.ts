@@ -242,16 +242,16 @@ export const about: AboutContent = {
   ],
   principles: [
     {
-      title: 'El sistema primero',
-      description: 'No diseño features aislados — diseño sistemas que se sostienen solos.',
+      title: 'Claridad operativa',
+      description: 'Transformo complejidad en sistemas claros, accionables y escalables. Mi especialidad es crear orden donde hay caos.',
     },
     {
-      title: 'Claridad sobre complejidad',
-      description: 'Si no lo puedo explicar en una slide, no lo entendí todavía.',
+      title: 'Estrategia basada en datos',
+      description: 'Conecto métricas norte, OKRs y KPIs desde el origen. Cada decisión de diseño tiene una razón medible de ser.',
     },
     {
       title: 'IA como amplificador',
-      description: 'No como atajo, sino como segunda capa de pensamiento en cada etapa.',
+      description: 'Integro IA generativa en cada etapa del proceso. No como atajo, sino como segunda capa de pensamiento.',
     },
   ],
   education: [
